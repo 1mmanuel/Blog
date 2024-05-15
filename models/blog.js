@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 
-const config = require("../utils/config");
-const logger = require("../utils/logger");
-
 const blogSchema = new mongoose.Schema({
   title: String,
   author: String,
@@ -18,4 +15,4 @@ blogSchema.set("toJSON", {
   },
 });
 
-module.exports = mongoose.model("blog", blogSchema);
+module.exports = mongoose.model("Blog", blogSchema);
