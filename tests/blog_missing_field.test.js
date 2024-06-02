@@ -1,33 +1,35 @@
-const { test, describe } = require("node:test");
+const { test, describe, after } = require("node:test");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
-const helper = require("./test_helper");
 const app = require("../index");
 const assert = require("node:assert");
-
-const Blog = require("../models/blog");
-const api = supertest(app);
 
 describe("return 400 if title or url are missing", () => {
   test("responds with 400 if title is missing", async () => {
     const newBlog = {
-      author: "John Doe",
-      url: "https://example.com",
+      author: "Robert C. Martin",
+      url: "http://blog.cleancoder.com/uncle-bob/2017/05/05/TestDefinitions.html",
+      likes: 10,
     };
 
-    const response = await supertest(app).post("/api/blogs").send(newBlog);
+    const response = await supertest(app).post("/api/blog").send(newBlog);
 
     assert.strictEqual(response.status, 400);
   });
 
   test("responds with 400 if url is missing", async () => {
     const newBlog = {
-      title: "Test Blog",
-      author: "John Doe",
+      title: "First class tests",
+      author: "Robert C. Martin",
+      likes: 10,
     };
 
-    const response = await supertest(app).post("/api/blogs").send(newBlog);
+    const response = await supertest(app).post("/api/blog").send(newBlog);
 
     assert.strictEqual(response.status, 400);
   });
+});
+
+after(async () => {
+  await mongoose.connection.close();
 });
