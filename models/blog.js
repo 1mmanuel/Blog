@@ -15,4 +15,9 @@ blogSchema.set("toJSON", {
   },
 });
 
+// Rename the "_id" property to "id" in the schema
+blogSchema.virtual("id").get(function () {
+  return this._id.toHexString();
+});
+
 module.exports = mongoose.model("Blog", blogSchema);

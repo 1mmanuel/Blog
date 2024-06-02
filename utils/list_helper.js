@@ -56,10 +56,29 @@ const mostLikes = (blogs) => {
   };
 };
 
+const idTest = (blogs) => {
+  for (const blog of blogs) {
+    if (!blog.hasOwnProperty("id") && blog.hasOwnProperty("_id")) {
+      return false;
+    }
+  }
+  return true;
+};
+
+const missingLike = (blogs) => {
+  if (!blogs.hasOwnProperty("likes")) {
+    blogs.likes = 0;
+  }
+
+  return blogs;
+};
+
 module.exports = {
   dummy,
   totalLikes,
   favoriteBlog,
   mostBlogs,
   mostLikes,
+  idTest,
+  missingLike,
 };
